@@ -16,6 +16,7 @@
   "author": "ErAz7",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "colors": "^1.4.0",
     "express": "^4.17.1",
     "ffmpeg": "0.0.4",
