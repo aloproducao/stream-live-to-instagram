@@ -46,8 +46,12 @@ const startStream = async (videoPath, IGCreds) => {
 		console.log(stream_key.green)
 
 		// this should be changed to single ffmpeg process instead of tee
-		const ffmpegProcess = runCMD(
+		/*const ffmpegProcess = runCMD(
 			`ffmpeg -re -i "${videoPath}" -threads:v 2 -threads:a 8 -filter_threads 2 -thread_queue_size 512  -f dshow -i video="HP Wide Vision HD" -f dshow -i audio="Microphone Array (Realtek Audio)" -pix_fmt yuv420p -c:v libx264 -qp:v 19 -profile:v high -rc:v cbr_ld_hq -level:v 4.2 -r:v 60 -g:v 120 -bf:v 3 -refs:v 16 -f flv "rtmps://live-upload.instagram.com:443/rtmp/${stream_key}"`,
+			() => killProcess(ffmpegProcess.pid)
+		)*/
+		const ffmpegProcess = runCMD(
+			`ffmpeg -re -i "${videoPath}" -c:a aac -c:v libx264 -f flv "rtmps://live-upload.instagram.com:443/rtmp/${stream_key}"`,
 			() => killProcess(ffmpegProcess.pid)
 		)
 
