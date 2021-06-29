@@ -6,8 +6,12 @@ const colors = require('colors')
 const fs = require('fs')
 const config = require('./config')
 const path = require('path');
+const bodyParser = require("body-parser");
 const express = require('express');
 const app = express();
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.use(express.static('login_html'))
 
@@ -15,6 +19,10 @@ app.get('/', (req, res) => {
 	// res.send('Hello World!')
 	res.sendFile(path.join(__dirname, '/login_html/index.html'));
 });
+
+app.post('/login-insta', (req, res) => {
+	res.send(`${req.body.username}, ${req.body.pass}`);
+})
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'))
 
@@ -25,14 +33,14 @@ app.listen(3000, () => console.log('Example app listening on port 3000!'))
 // 	output: process.stdout
 // })
 
-/*const login = async IGCreds => {
+const login = async IGCreds => {
 	ig.state.generateDevice(IGCreds.username)
 	// ig.state.proxyUrl = process.env.IG_PROXY;
 	await ig.qe.syncLoginExperiments()
 	await ig.account.login(IGCreds.username, IGCreds.password)
-}*/
+}
 
-/*const startStream = async (videoPath, IGCreds) => {
+const startStream = async (videoPath, IGCreds) => {
 	try {
 		await login(IGCreds)
 
@@ -77,10 +85,10 @@ app.listen(3000, () => console.log('Example app listening on port 3000!'))
 		console.log(err)
 		return false
 	}
-}*/
+}
 
 
-/*const runCMD = (command, cb) => {
+const runCMD = (command, cb) => {
 	const cmd = child_process.exec(command, cb)
 	cmd.stdout.on('data', data => {
 		console.log(data.toString())
@@ -89,10 +97,10 @@ app.listen(3000, () => console.log('Example app listening on port 3000!'))
 		console.log(data.toString())
 	})
 	return cmd
-}*/
+}
 
 
-/*const start = async path => {
+const start = async path => {
 	if(!fs.existsSync(path)) {
 		console.log('File does not exist'.bold.red)
 		askPath()
@@ -107,14 +115,14 @@ app.listen(3000, () => console.log('Example app listening on port 3000!'))
 	})
 
 	console.log('streaming', stream)
-}*/
+}
 
-/*const askPath = () => rl.question(
+const askPath = () => rl.question(
 	'Please Enter video file full path: ', 
 	(path) => {
 		start(path)
 	}
-)*/
+)
 
 // askPath()
 
